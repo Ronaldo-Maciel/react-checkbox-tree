@@ -1,0 +1,137 @@
+@import "../../layout/colors";
+
+.container {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  position: relative;
+  width: 100%;
+}
+
+.checkbox {
+  display: inline-block;
+  position: relative;
+  flex: 0 0 18px;
+  box-sizing: content-box;
+  width: 18px;
+  height: 18px;
+  line-height: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  vertical-align: bottom;
+  padding: 11px;
+}
+
+.box {
+  border-color: #757575;
+  display: inline-flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+  background-color: transparent;
+  pointer-events: none;
+  will-change: background-color, border-color;
+  transition: background-color 90ms 0ms cubic-bezier(0.4, 0, 0.6, 1), border-color 90ms 0ms cubic-bezier(0.4, 0, 0.6, 1);
+
+  .native-checkbox:checked~&,
+  .native-checkbox:indeterminate~& {
+    background-color: $color-primary;
+    border-color: $color-primary;
+  }
+
+  .native-checkbox:checked~& {
+    .checkmark__path {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .native-checkbox:indeterminate~& {
+    .checkmark-indeterminate {
+      transform: scaleX(1) rotate(0deg);
+      opacity: 1;
+    }
+
+    .checkmark__path {
+      opacity: 0;
+    }
+  }
+
+  &:before {
+    content: "";
+    top: -13px;
+    left: -13px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    transform: scale(0, 0);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    will-change: opacity, transform;
+    transition: opacity 90ms 0ms cubic-bezier(0.4, 0, 0.6, 1), transform 90ms 0ms cubic-bezier(0.4, 0, 0.6, 1);
+
+    .native-checkbox:checked~& {
+      opacity: 1;
+    }
+  }
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+  transition: opacity 180ms 0ms cubic-bezier(0.4, 0, 0.6, 1);
+  color: #fff;
+
+  &__path {
+    transition: stroke-dashoffset 180ms 0ms cubic-bezier(0.4, 0, 0.6, 1);
+    stroke: currentColor;
+    stroke-width: 3.12px;
+    stroke-dashoffset: 29.7833385;
+    stroke-dasharray: 29.7833385;
+  }
+}
+
+.checkmark-indeterminate {
+  width: 100%;
+  height: 0;
+  transform: scaleX(0) rotate(0deg);
+  border: 1px solid #fff;
+  opacity: 0;
+  display: block;
+}
+
+.label {
+  font-size: 1rem;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  padding-left: 4px;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.native-checkbox {
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: inherit;
+}

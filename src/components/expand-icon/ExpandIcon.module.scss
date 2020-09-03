@@ -1,0 +1,16 @@
+@import "../../layout/colors";
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.container {
+  display: inline-block;
+  transition: .3s transform ease-in-out;
+
+  &.expanded {
+    transform: rotate(-180deg);
+    fill: $color-primary;
+  }
+}

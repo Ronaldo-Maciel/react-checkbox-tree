@@ -17,7 +17,35 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "prettier",
+      "prettier/react",
+      "jest-dom",
+      "testing-library"
+    ],
+    "rules": {
+      "semi": 0,
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx",
+            ".tsx",
+            ".ts"
+          ]
+        }
+      ],
+      "no-unused-expressions": "off",
+      "no-unused-vars": "warn",
+      "prettier/prettier": [
+        "error",
+        {
+          "semi": false
+        }
+      ]
+    }
   },
   "browserslist": {
     "production": [
@@ -30,5 +58,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-jest-dom": "^3.2.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-testing-library": "^3.8.0",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.1.1"
   }
 }

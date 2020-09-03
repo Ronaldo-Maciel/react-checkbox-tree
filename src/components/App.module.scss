@@ -1,0 +1,11 @@
+.app {
+  max-width: 100%;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: 768px) {
+    max-width: 600px;
+  }
+}
