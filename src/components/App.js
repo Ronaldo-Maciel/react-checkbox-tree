@@ -2,13 +2,12 @@ import React from 'react'
 import styles from './App.module.scss'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import getfromApi from '../services/services'
 import CheckboxList from './checkbox-tree/ChecboxTree'
 import { persistData } from '../constants/constants'
 import Loading from './loading/loading'
+import data from '../services/data.json'
 
 function App() {
-  const [data, setData] = useState({})
   const [state, setState] = useState(
     () =>
       JSON.parse(localStorage.getItem(persistData)) || {
@@ -16,14 +15,6 @@ function App() {
         expanded: [],
       }
   )
-
-  useEffect(() => {
-    const handleResponseData = async () => {
-      const response = await getfromApi()
-      setData(response)
-    }
-    handleResponseData()
-  }, [])
 
   useEffect(() => {
     localStorage.setItem(persistData, JSON.stringify(state))
