@@ -3,11 +3,13 @@
 }
 
 .label-component {
+  height: 40px;
+
   &::before {
     content: '';
     position: absolute;
     width: 100%;
-    height: 40px;
+    height: inherit;
     left: 0;
   }
 
@@ -16,6 +18,10 @@
       background-color: #eaeaea;
     }
   }
+}
+
+.label-content {
+  position: relative;
 }
 
 .group {

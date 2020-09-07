@@ -1,36 +1,51 @@
 import React from 'react'
 import styles from './TreeItem.module.scss'
 import ExpandIcon from '../expand-icon/ExpandIcon'
-import { useState } from 'react'
 
-function TreeItem({ labelComponent, children, parentId }) {
-  const [expand, setExpand] = useState(false)
-  const onExpand = () => setExpand(!expand)
+function TreeItem({
+  children,
+  label,
+  onExpand = () => {},
+  expanded = false,
+  itemId,
+}) {
   const hasChildren = Array.isArray(children)
     ? children.length > 0
     : Boolean(children)
 
+  const ref = React.createRef()
+
+  const handleExpand = () => {
+    onExpand({ id: itemId, expanded: !expanded })
+    if (ref.current) {
+      ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }
+  }
+
   return (
-    <li role="treeitem" className={styles.item}>
+    <li role="treeitem" className={styles.item} ref={ref}>
       <div className={styles['label-component']}>
         {hasChildren && (
           <button
             type="button"
-            aria-expanded={expand}
+            aria-expanded={expanded}
             aria-labelledby="expand-label"
             className={styles['expand-button']}
-            onClick={onExpand}
+            onClick={handleExpand}
           >
-            <ExpandIcon isExpanded={expand} />
+            <ExpandIcon isExpanded={expanded} />
             <span id="expand-label" hidden>
               Mais opções
             </span>
           </button>
         )}
-        {labelComponent}
+        {label}
       </div>
-      {hasChildren && expand && (
-        <ul role="group" className={styles.group} id={parentId}>
+      {expanded && (
+        <ul role="group" className={styles.group}>
           {children}
         </ul>
       )}

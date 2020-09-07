@@ -1,74 +1,58 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import TreeItem from './TreeItem'
-import userEvent from '@testing-library/user-event'
 
-it('should contain component with a role treeitem attribute in the document', () => {
-  render(
-    <TreeItem>
-      <a href="#foo"> foo bar </a>
-    </TreeItem>
-  )
+describe('TreeITem', () => {
+  it('should contain component with a role treeitem attribute in the document', () => {
+    render(
+      <TreeItem>
+        <a href="#foo"> foo bar </a>
+      </TreeItem>
+    )
 
-  expect(screen.getByRole('treeitem')).toBeInTheDocument()
-})
+    expect(screen.getByRole('treeitem')).toBeInTheDocument()
+  })
 
-it('should contain a labelComponent in the document', () => {
-  render(
-    <TreeItem
-      labelComponent={
-        <>
-          <label htmlFor="bar">foo</label>
-          <input type="text" id="bar" />
-        </>
-      }
-    />
-  )
+  it('should contain a role group element in the document when expanded', () => {
+    render(
+      <TreeItem expanded>
+        <p>Foo Bar</p>
+      </TreeItem>
+    )
 
-  expect(screen.getByLabelText('foo')).toBeInTheDocument()
-})
+    expect(screen.getByRole('group')).toBeInTheDocument()
+  })
 
-it('should contain a role group in the document', () => {
-  render(
-    <TreeItem
-      labelComponent={
-        <>
-          <label htmlFor="bar">foo</label>
-          <input type="text" id="bar" />
-        </>
-      }
-    >
-      <p>Foo Bar</p>
-    </TreeItem>
-  )
+  it('should contain a node children when expanded', () => {
+    render(
+      <TreeItem expanded>
+        <a href="#foo"> foo bar </a>
+      </TreeItem>
+    )
 
-  userEvent.click(screen.getByRole('button'))
+    expect(screen.getByText(/foo bar/i)).toBeInTheDocument()
+  })
 
-  expect(screen.getByRole('group')).toBeInTheDocument()
-})
+  it('should contain a label', () => {
+    render(<TreeItem label={<p>description item</p>} />)
 
-it('should contain a node children', () => {
-  render(
-    <TreeItem>
-      <a href="#foo"> foo bar </a>
-    </TreeItem>
-  )
+    expect(screen.getByText(/description item/i)).toBeInTheDocument()
+  })
 
-  userEvent.click(screen.getByRole('button'))
+  it('should contain an aria-expanded attribute in according expanded prop', () => {
+    const { rerender } = render(
+      <TreeItem>
+        <a href="#foo"> foo bar </a>
+      </TreeItem>
+    )
 
-  expect(screen.getByText(/foo bar/i)).toBeInTheDocument()
-})
+    expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'false')
 
-it('should contain a aria-expanded when has children', () => {
-  render(
-    <TreeItem>
-      <a href="#foo"> foo bar </a>
-    </TreeItem>
-  )
-
-  userEvent.click(screen.getByRole('button'))
-  expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'true')
-
-  userEvent.click(screen.getByRole('button'))
-  expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'false')
+    rerender(
+      <TreeItem expanded>
+        <a href="#foo"> foo bar </a>
+      </TreeItem>
+    )
+    expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'true')
+  })
 })

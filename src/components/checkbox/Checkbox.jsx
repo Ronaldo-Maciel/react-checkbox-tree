@@ -6,10 +6,10 @@ function Checkbox({ id, textLabel, indeterminate = false, ...rest }) {
   const inputref = useRef(null)
 
   useEffect(() => {
-    updateIndeterminate()
+    setIndeterminateProps()
   })
 
-  const updateIndeterminate = () => {
+  const setIndeterminateProps = () => {
     inputref.current.indeterminate = indeterminate
   }
 
